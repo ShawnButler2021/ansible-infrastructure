@@ -1,0 +1,23 @@
+---
+# tasks file for common
+
+- name: Ensure python3 is installed for Debian
+  raw: apt-get update -y && apt-get install -y python3
+  become: true
+  when: ansible_os_family == "Debian"
+
+- name: Ensure python3 is installed for RHEL
+  raw: dnf install -y python3
+  become: true
+  when: ansible_os_family == "RedHat"
+
+
+- name: Include firewall setup
+  import_tasks: firewall.yml
+
+- name: Include SSH hardening
+  import_tasks: ssh.yml
+
+- name: Include fail2ban
+  import_tasks: fail2ban.yml
+

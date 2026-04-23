@@ -1,0 +1,21 @@
+- name: Install fail2ban for Debian
+  apt:
+    name: fail2ban
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+  become: true
+
+- name: Install fail2ban for RHEL
+  dnf: 
+    name: epel-release,fail2ban
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "RedHat"
+  become: true
+
+
+- name: Enabling fail2ban
+  ansible.builtin.service:
+    name: fail2ban
+    state: started

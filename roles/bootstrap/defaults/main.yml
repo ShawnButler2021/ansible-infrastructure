@@ -1,0 +1,18 @@
+---
+# defaults file for common
+
+# SSH settings
+ssh_port: 2020
+ssh_permit_root_login: "no"
+ssh_password_auth: "yes"
+ssh_pubkey_auth: "yes"
+
+# ===
+
+
+# Firewall settings
+firewall_allowed_tcp_ports: "{{ ssh_port }}"
+
+firewall_default_policy: "deny"
+# ===
+

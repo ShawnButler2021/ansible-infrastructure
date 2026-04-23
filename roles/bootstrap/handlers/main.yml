@@ -1,0 +1,20 @@
+---
+# handlers file for common
+
+
+
+- name: Restart SSH for Debian
+  service: 
+    name: ssh
+    state: restarted
+  become: yes
+  when: ansible_os_family == "Debian"
+
+
+- name: Restart SSH for RHEL
+  service: 
+    name: sshd
+    state: restarted
+  become: yes
+  when: ansible_os_family == "RedHat"
+

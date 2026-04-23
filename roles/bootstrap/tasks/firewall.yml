@@ -1,0 +1,78 @@
+- name: Install ufw for Debian
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+  become: true
+
+- name: Install ufw for RHEL
+  dnf: 
+    name: epel-release,ufw
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "RedHat"
+  become: true
+
+
+- name: Disable firewalld for RHEL
+  ansible.builtin.service:
+    name: firewalld
+    state: stopped
+    enabled: false
+  when: ansible_os_family == "RedHat"
+  become: true
+
+
+
+# Disabling ufw for changes
+- name: Reset ufw
+  ufw: 
+    state: reset
+  become: true
+# ===
+
+# Making ufw changes
+- name: Set default incoming policy to deny
+  ufw: 
+    direction: incoming
+    policy: "{{ firewall_default_policy }}"
+
+- name: Set default outgoing policy to allow
+  ufw: 
+    direction: outgoing
+    policy: allow
+
+# Temporarily allow ssh to port 22 from Ansible controller only
+- name: Allow SSH port 22 from Ansible controller
+  ufw: 
+    rule: allow
+    port: 22
+    proto: tcp
+    src: "{{ hostvars['ansible_controllers']['ansible_host'] }}" 
+
+- name: Allow SSH on port 2020
+  ufw: 
+    rule: allow
+    port: 2020
+    proto: tcp
+
+# otherwise everyone can ssh from port 22
+- name: Delete SSH application from ufw
+  community.general.ufw:
+    rule: allow
+    name: SSH
+    delete: true
+# ===
+
+- name: Enable ufw service
+  ansible.builtin.service:
+    name: ufw
+    state: started
+    enabled: true
+  become: true
+
+- name: Enable ufw firewall
+  ufw: 
+    state: enabled
+  become: true

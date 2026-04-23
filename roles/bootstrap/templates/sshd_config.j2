@@ -1,0 +1,68 @@
+# Network
+
+Port 22
+Port 2020
+AddressFamily any
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+# ===
+
+
+# Authentication Methods
+
+# PasswordAuthentication no
+PasswordAuthentication yes
+# AuthenticationMethods publickey
+# PubkeyAuthentication yes
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+# HostKey /etc...
+
+# ===
+
+
+# Authentication Controls
+
+PermitRootLogin yes
+
+# ===
+
+
+
+# Logging
+
+SyslogFacility AUTH
+LogLevel INFO
+
+# ===
+
+#Port 22
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+
+#HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_ecdsa_key
+#HostKey /etc/ssh/ssh_host_ed25519_key
+
+# Ciphers and keying
+#RekeyLimit default none
+
+# Logging
+#SyslogFacility AUTH
+#LogLevel INFO
+
+# Authentication:
+AuthorizedKeysFile	.ssh/authorized_keys
+
+#LoginGraceTime 2m
+#StrictModes yes
+MaxAuthTries 6
+MaxSessions 10
+
+# ===
+
+X11Forwarding no
+Subsystem	sftp	/usr/libexec/openssh/sftp-server
