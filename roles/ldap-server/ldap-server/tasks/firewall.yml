@@ -1,0 +1,6 @@
+- name: Enabling LDAP through the firewall by port
+  community.general.ufw:
+    rule: allow
+    port: 636
+    proto: tcp
+

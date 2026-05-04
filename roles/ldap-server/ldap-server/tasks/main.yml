@@ -1,0 +1,9 @@
+---
+# tasks file for ldap
+
+
+- name: Check OpenLDAP dependencies
+  import_tasks: install_dependencies.yml
+
+- name: Enable OpenLDAP through the firewall (ufw)
+  import_tasks: firewall.yml

@@ -1,0 +1,7 @@
+---
+# vars file for ldap
+
+
+
+
+openldap_installs_debian: ldap-utils,slapd
