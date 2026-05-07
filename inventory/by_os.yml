@@ -1,0 +1,9 @@
+all:
+  hosts:
+    debian:
+      ansible_host: 127.0.0.1
+      ansible_connection: local
+
+    rhel:
+      ansible_host: 127.0.0.1
+
